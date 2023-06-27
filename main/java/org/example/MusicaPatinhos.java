@@ -1,8 +1,5 @@
 package org.example;
 
-
-import java.util.Scanner;
-
 import java.util.Scanner;
 
 public class MusicaPatinhos {
@@ -12,28 +9,50 @@ public class MusicaPatinhos {
         System.out.print("Digite o número de patinhos: ");
         int numeroPatinhos = scanner.nextInt();
 
+        if (numeroPatinhos < 0) {
+            System.out.println("O número de patinhos deve ser positivo.");
+            return;
+        }
+
+        for (int i = numeroPatinhos; i >= 1; i--) {
+            String estrofeAtual = obterEstrofePorExtenso(i);
+            String estrofeSeguinte = obterEstrofePorExtenso(i - 1);
+            imprimirEstrofe(estrofeAtual, "patinhos", estrofeSeguinte);
+        }
+
+        imprimirFinalHistoria(numeroPatinhos);
+
+        scanner.close();
+    }
+
+    private static String obterEstrofePorExtenso(int numero) {
+
         String[] numerosPorExtenso = {
                 "Zero", "Um", "Dois", "Três", "Quatro", "Cinco", "Seis", "Sete", "Oito", "Nove"
         };
 
-        for (int i = numeroPatinhos; i >= 0; i--) {
-            if (i > 1) {
-                System.out.println(numerosPorExtenso[i] + " patinhos foram passear");
-                System.out.println("Além das montanhas");
-                System.out.println("Para brincar");
-                System.out.println("A mamãe gritou: Quá, quá, quá, quá");
-                System.out.println("Mas só " + numerosPorExtenso[i - 1] + " patinho" + (i - 1 > 1 ? "s" : "") + " voltaram de lá\n");
-            } else if (i == 1) {
-                System.out.println(numerosPorExtenso[i] + " patinho foi passear");
-                System.out.println("Além das montanhas");
-                System.out.println("Para brincar");
-                System.out.println("A mamãe gritou: Quá, quá, quá, quá");
-                System.out.println("Mas nenhum patinho voltou de lá\n");
-            } else {
-                System.out.println("Não havia mais patinhos passeando");
-            }
+        return numerosPorExtenso[numero];
+    }
+
+    private static void imprimirEstrofe(String quantidade, String plural, String quantidadeRestante) {
+        if (quantidade.equals("Um")) {
+            System.out.println(quantidade + " patinho foi passear");
+        } else {
+            System.out.println(quantidade + " patinhos foram passear");
         }
 
+        System.out.println("Além das montanhas");
+        System.out.println("Para brincar");
+        System.out.println("A mamãe gritou: Quá, quá, quá, quá");
+
+        if (quantidadeRestante.equals("Zero")) {
+            System.out.println("Mais nenhum patinho voltou de lá\n");
+        } else {
+            System.out.println("Mas só " + quantidadeRestante + " patinho" + (quantidadeRestante.equals("Um") ? "" : "s") + " voltaram de lá\n");
+        }
+    }
+
+    private static void imprimirFinalHistoria(int numeroPatinhos) {
         System.out.println("Puxa!");
         System.out.println("A mamãe patinha");
         System.out.println("Ficou tão triste naquele dia");
@@ -48,11 +67,7 @@ public class MusicaPatinhos {
 
         System.out.println("A mamãe gritou");
         System.out.println("Quá, quá, quá, quá!");
-        System.out.println("E os " + numerosPorExtenso[numeroPatinhos] + " patinhos");
+        System.out.println("E os " + obterEstrofePorExtenso(numeroPatinhos) + " patinhos");
         System.out.println("Voltaram de lá");
-
-        scanner.close();
     }
 }
-
-
